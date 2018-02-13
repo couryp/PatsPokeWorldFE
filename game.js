@@ -1,0 +1,5 @@
+var game = new Phaser.Game(512, 512, Phaser.AUTO, document.getElementById('game'))
+// var game = new Phaser.Game(500, 500, Phaser.AUTO, null, null, null, false)
+//game.state.add('state0', ppw.state0)
+game.state.add('Game', Game)
+game.state.start('Game')
