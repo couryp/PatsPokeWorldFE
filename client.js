@@ -1,11 +1,7 @@
-// let game = new Phaser.Game(500, 500, Phaser.AUTO, document.getElementById('game'),
-//  { preload: preload,
-//     create: create,
-//     update: update });
 
 var Client = {};
 Client.socket = io('http://localhost:8081')
-// Client.socket = io.connect()
+
 
 
 Client.askNewPlayer = function(){

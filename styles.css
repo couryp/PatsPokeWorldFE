@@ -1,13 +1,54 @@
+ .container {
+  padding-right: 0;
+  padding-left: 0;
+
+}
+
 #game {
   height: 100vh;
+
   display: flex;
 
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   margin: 0;
 
 }
 
+/* .col-2 {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+} */
+
+
+.parent {
+  position: relative;
+  top: 0;
+  left: 0;
+}
+.child1 {
+  position: relative;
+  top: 0;
+  left: 0;
+}
+.child2 {
+  position: absolute;
+  top: 110px;
+  left: 70px;
+}
+
+.child3 {
+  position: absolute;
+  top: 115px;
+  left: 315px;
+}
+.child4 {
+  position: absolute;
+  top: 145px;
+  left: 315px;
+}
 /* canvas {
   display: block;
   position: fixed;
