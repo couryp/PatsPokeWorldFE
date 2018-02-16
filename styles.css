@@ -4,6 +4,10 @@
 
 }
 
+body {
+  background-color: #e8fdf5
+}
+
 #game {
   height: 100vh;
 
@@ -15,13 +19,18 @@
 
 }
 
-/* .col-2 {
-  display: flex;
 
-  align-items: center;
-  justify-content: center;
-} */
+#middlerow {
+  padding-top: 31px;
+  padding-left: 39px;
+}
+#rightrow {
+  padding-top: 20px;
+}
 
+.shrinkMe {
+  width: 15%;
+}
 
 .parent {
   position: relative;

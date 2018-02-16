@@ -4,6 +4,7 @@
 
 
 var Game = {};
+let map
 
 Game.init = function(){
     game.stage.disableVisibilityChange = true;
@@ -23,10 +24,20 @@ Game.preload = function() {
 
 Game.create = function(){
     Game.playerMap = {};
-
-    var map;
-    map = game.add.sprite(0, 0, 'pallet')
-
+    // map = game.add.tilemap();
+    // //  Creates a new blank layer and sets the map dimensions.
+    // //  In this case the map is 40x30 tiles in size and the tiles are 32x32 pixels in size.
+    // layer1 = map.create('theRoom',10,10,10,10);
+    // var testKey = game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+    // testKey.onDown.add(Client.sendTest, this)
+    // var map2 = game.add.group()
+    // var map = map.create(0, 0, 'pallet')
+    map = game.add.tileSprite(0, 0, 512, 512, 'pallet')
+    // map = game.add.sprite(0, 0, 'pallet')
+    // map.createLayer()
+    map.inputEnabled = true;
+    map.events.onInputUp.add(Game.getCoordinates, this)
+    console.log('where am i?')
     // var layer = map.createLayer();
     // // // // for(var i = 0; i < map.layers.length;s i++) {
     // // // //     layer = map.createLayer(i);
@@ -35,8 +46,10 @@ Game.create = function(){
     // layer.events.onInputUp.add(Game.getCoordinates, this);
     Client.askNewPlayer();
 
-    var cursors = game.input.keyboard.createCursorKeys()
+    // var cursors = game.input.keyboard.createCursorKeys()
 };
+
+
 
 // Game.update = function(){
 //   var player = Game.playerMap[id]
@@ -61,41 +74,40 @@ Game.create = function(){
 //           }
 // }
 
-// Game.getCoordinates = function(layer,pointer){
-//     Client.sendClick(pointer.worldX,pointer.worldY);
-// };
-
-Game.addNewPlayer = function(id,x,y){
-    // var player = Game.playerMap[id];
-    Game.playerMap[id] = game.add.sprite(x,y,'ash');
-    game.physics.arcade.enable(Game.playerMap[id])
-    Game.playerMap[id].body.collideWorldBounds = true;
-    Game.playerMap[id].body.allowGravity = false;
+Game.getCoordinates = function(map,pointer){
+    Client.sendClick(pointer.worldX,pointer.worldY);
 };
 
-// Game.movePlayer = function(id,x,y){
-//     var player = Game.playerMap[id];
-//     var distance = Phaser.Math.distance(player.x,player.y,x,y);
-//     var tween = game.add.tween(player);
-//     var duration = distance*10;
-//     tween.to({x:x,y:y}, duration);
-//     tween.start();
-// };
+Game.addNewPlayer = function(id,x,y){
+    Game.playerMap[id] = game.add.sprite(x,y,'ash');
+    // var player = Game.playerMap[id];
+    // player.createLayer()
+    // game.physics.arcade.enable(Game.playerMap[id])
+    // Game.playerMap[id].body.collideWorldBounds = true;
+    // Game.playerMap[id].body.allowGravity = false;
+};
 
-Game.movement = function(){
-    Client.movement(player.id, player.position.x, player.position.y) //sends data to client file, movement function
-}
-
-Game.movePlayer = function(data){ //gets from client
-
-}
+Game.movePlayer = function(id,x,y){
+    var player = Game.playerMap[id];
+    var distance = Phaser.Math.distance(player.x,player.y,x,y);
+    var tween = game.add.tween(player);
+    var duration = distance*10;
+    tween.to({x:x,y:y}, duration);
+    tween.start();
+};
 
 Game.removePlayer = function(id){
     Game.playerMap[id].destroy();
     delete Game.playerMap[id];
 };
 
+// Game.movement = function(){
+//     Client.movement(player.id, player.position.x, player.position.y) //sends data to client file, movement function
+// }
 
+// Game.movePlayer = function(data){ //gets from client
+//
+// }
 
 
 // // patsPokeWorld.state1.prototype = {

@@ -24,7 +24,10 @@ const wipeTeam = document.querySelector('#wipe-button')
 const teamNameInput = document.querySelector('#teamname-input')
 const submitTeam = document.querySelector('#submitteam-button')
 
-const seeTeams = document.querySelector('#seeteam-button')
+const contentHere = document.querySelector('#contentHere')
+
+const deleteInput = document.querySelector('#delete-input')
+const deleteButton = document.querySelector('#delete-button')
 
 let misty = {}
 let masterArray = []
@@ -34,6 +37,9 @@ let nameHolder
 
 
 let currentUser
+let currentUserId
+
+let squadID
 
 usernameBtn.addEventListener('click', (e) => {
   e.preventDefault()
@@ -42,10 +48,13 @@ usernameBtn.addEventListener('click', (e) => {
     .then((response) => {
       if(response.data.valid) {
         currentUser = usernameInput.value
+        currentUserId = response.data.userId
+        console.log('user id', currentUserId)
         alert('user created gj')
       } else {
         alert('user WAS NOT created')
       }
+      updateModal(currentUserId)
     })
     .catch(error => console.log(error))
 })
@@ -102,29 +111,36 @@ addPokemon.addEventListener('click', (e) => {
 submitTeam.addEventListener('click', (e) => {
   e.preventDefault()
 
-  let promise1 = axios.post(`${baseURL}/squads`, {name: teamNameInput.value})
-    .then((response) => {
-      //do i add currentuser here?
-      if(response.data.valid) {
-        alert('squirtle squad!')
-      } else {
-        alert('squad not made')
-      }
-    })
-    .catch(error => console.log(error))
-
+  let promise1 = axios.post(`${baseURL}/squads`, {name: teamNameInput.value, user_id: currentUserId})
 
   let promise2 = axios.post(`${baseURL}/pokemon`, {masterArray})
-    .then((response) => {
-      if(response) {
-        alert('Pokemon spawned!')
-      }
-    })
-    .catch(error => console.log(error))
 
-  Promise.all([promise1, promise2])
-
+    Promise.all([promise1, promise2])
+      .then(result => {
+        updateModal(currentUserId)
+        console.log(result, 'jmoney')
+      })
+      .catch(error => console.log(error))
 })
+
+function updateModal(id){
+  axios.get(`${baseURL}/users/${id}/squads`)
+    .then((response) => {
+      let teamList = response.data
+      clearModalText();
+      teamList.forEach(team => {
+        let p = document.createElement('p')
+        p.textContent = `teamId: ${team.id} | teamName: ${team.name} | teamUserId: ${team.user_id}`
+        contentHere.appendChild(p)
+      })
+    })
+}
+
+function clearModalText(){
+  while(contentHere.firstChild) {
+      contentHere.removeChild(contentHere.firstChild);
+    }
+}
 
 wipeTeam.addEventListener('click', (e) => {
   e.preventDefault()
@@ -135,4 +151,15 @@ wipeTeam.addEventListener('click', (e) => {
   poke5.src = "assets/pokebadges.png"
   poke6.src = "assets/pokebadges.png"
   masterArray = []
+})
+
+deleteButton.addEventListener('click', (e) => {
+  e.preventDefault()
+  let delTeamId = deleteInput.value
+  axios.delete(`${baseURL}/squads/${delTeamId}`)
+    .then((typical) => {
+      updateModal(currentUserId)
+    })
+    .catch(error => console.log(error))
+    deleteInput.value = ""
 })

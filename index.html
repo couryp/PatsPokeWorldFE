@@ -1,85 +1,113 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Pats PokeWorld</title>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<head>
+  <meta charset="utf-8">
+  <title>Pats PokeWorld</title>
 
-    <script defer src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+  <script defer src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 
-    <script type="text/javascript" src="phaser.min.js"></script>
-    <!-- <script src="/socket.io/socket.io.js"></script> -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js">
-    </script>
-    <link rel="stylesheet" href="styles.css">
+  <script type="text/javascript" src="phaser.min.js"></script>
+  <!-- <script src="/socket.io/socket.io.js"></script> -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js">
+  </script>
+  <link rel="stylesheet" href="styles.css">
 
-  </head>
-  <body>
+</head>
 
-    <div class="container">
-      <div class="row">
-        <div class="col-5" id="game">
+<body>
 
+  <div class="container">
+    <div class="row">
+      <div class="col-5" id="game">
+
+      </div>
+      <div id="middlerow" class="col-2">
+        <img id="poke1" src="assets/pokebadges.png" alt="">
+        <img id="poke2" src="assets/pokebadges.png" alt="">
+        <img id="poke3" src="assets/pokebadges.png" alt="">
+        <img id="poke4" src="assets/pokebadges.png" alt="">
+        <img id="poke5" src="assets/pokebadges.png" alt="">
+        <img id="poke6" src="assets/pokebadges.png" alt="">
+        <!-- <img src="assets/teamrocket.png" alt=""> -->
+      </div>
+      <div id="rightrow" class="col-5">
+        <!-- username -->
+        <form>
+          <input id="username-input" type="text" name="" value="" placeholder="USERNAME">
+          <button id="username-button" type="submit" class="btn btn-primary" name="button">Submit Name</button>
+          <p id="username-p">Please Enter Username</p>
+        </form>
+        <!-- pokemon id -->
+        <form>
+          <input id="pokemon-input" type="text" class="shrinkMe" name="" value="" placeholder="ID">
+          <button id="pokemon-button" type="submit" class="btn btn-primary" name="button">Submit Pokemon ID</button>
+        </form>
+
+        <button id="add-button" type="button" class="btn btn-success">Add Pokemon</button>
+
+        <button type="button" class="btn btn-info" onclick="window.open('https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_by_National_Pok%C3%A9dex_number')">Pokemon Ids</button>
+
+        <button id='wipe-button' type="button" class="btn btn-warning">Wipe Team</button>
+
+        <div class="parent">
+          <img class="child1" src="assets/pokedex1.gif" alt="">
+          <img class="child2" src="assets/pokebadges.png" alt="">
+          <p class="child3">POKEMON NAME</p>
+          <p class="child4">POKEMON ID</p>
         </div>
-        <div class="col-2">
-          <img id="poke1" src="assets/pokebadges.png" alt="">
-          <img id="poke2" src="assets/pokebadges.png" alt="">
-          <img id="poke3" src="assets/pokebadges.png" alt="">
-          <img id="poke4" src="assets/pokebadges.png" alt="">
-          <img id="poke5" src="assets/pokebadges.png" alt="">
-          <img id="poke6" src="assets/pokebadges.png" alt="">
-          <!-- <img src="assets/teamrocket.png" alt=""> -->
-        </div>
-        <div class="col-5">
-          <!-- username -->
-          <form>
-            <input id="username-input" type="text" name="" value="" placeholder="USERNAME">
-            <button id="username-button" type="submit" class="btn btn-primary"  name="button">Submit Name</button>
-            <p id="username-p">Please Enter Username</p>
-          </form>
-          <!-- pokemon id -->
-          <form>
-            <input id="pokemon-input" type="text" name="" value="" placeholder="Search By Pokemon Id
-            ">
-            <button id="pokemon-button" type="submit" class="btn btn-primary"  name="button">Submit Pokemon ID</button>
-          </form>
 
-          <button id="add-button" type="button" class="btn btn-success">Add Pokemon</button>
 
-          <button type="button" class="btn btn-info" onclick="window.open('https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_by_National_Pok%C3%A9dex_number')">Pokemon Ids</button>
+        <input id="teamname-input" type="text" name="" value="" placeholder="Team Name">
+        <button id="submitteam-button" type="button" class="btn btn-success">Submit Team</button>
 
-          <button id='wipe-button' type="button" class="btn btn-warning">Wipe Team</button>
+        <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+      See Teams
+    </button>
 
-          <div class="parent">
-            <img class="child1" src="assets/pokedex1.gif" alt="">
-            <img class="child2" src="assets/pokebadges.png" alt="">
-            <p class="child3">POKEMON NAME</p>
-            <p class="child4">POKEMON ID</p>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Your Teams</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
           </div>
-
-
-          <input id="teamname-input" type="text" name="" value="" placeholder="Team Name">
-          <button id="submitteam-button" type="button" class="btn btn-success">Submit Team</button>
-
-          <button id="seeteam-button" type="button" class="btn btn-secondary">See Teams</button>
-
-          <input type="text" name="" value="" placeholder="Team ID">
-          <button type="button" class="btn btn-warning">See Team w/ ID</button>
-          <button type="button" class="btn btn-danger">Delete Team</button>
-
-
+          <div id="contentHere" class="modal-body">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- <script src="./../PatsPokeWorldBE/scripts/app.js" charset="utf-8"></script> -->
-    <script defer type="text/javascript" src="app.js"></script>
-    <script defer type="text/javascript" src="state1.js"></script>
-    <script defer type="text/javascript" src="game.js"></script>
-    <!-- <script type="text/javascript" src="main.js"></script> -->
-    <script defer type="text/javascript" src="client.js"></script>
 
-  </body>
+            <input id="delete-input" type="text" class="shrinkMe" name="" value="" placeholder="Team ID">
+            <button id="delete-button" type="button" class="btn btn-danger">Delete Team</button>
+
+
+          </div>
+        </div>
+      </div>
+
+      <!-- <script src="./../PatsPokeWorldBE/scripts/app.js" charset="utf-8"></script> -->
+      <script defer type="text/javascript" src="app.js"></script>
+      <script defer type="text/javascript" src="state1.js"></script>
+      <script defer type="text/javascript" src="game.js"></script>
+      <!-- <script type="text/javascript" src="main.js"></script> -->
+      <script defer type="text/javascript" src="client.js"></script>
+
+</body>
+
 </html>
